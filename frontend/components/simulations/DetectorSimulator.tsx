@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { apiFetch } from "../../lib/api";
+import { apiFetch, clearSession, hasSession } from "../../lib/api";
+import LoginPanel from "../LoginPanel";
 import DetectorEventDisplay, { DetectorEvent } from "./DetectorEventDisplay";
 import ParticlePredictionPanel, { ParticleId } from "./ParticlePredictionPanel";
 
@@ -42,6 +43,9 @@ export default function DetectorSimulator() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [authenticated, setAuthenticated] = useState(hasSession);
+
+  if (!authenticated) return <LoginPanel onLogin={() => setAuthenticated(true)} />;
 
   async function refreshProgress() {
     try {
@@ -109,6 +113,7 @@ export default function DetectorSimulator() {
         <button className="button primary" disabled={loading} onClick={generateEvent} type="button">
           {loading ? "Generating collision…" : event ? "Generate new event" : "Generate event"}
         </button>
+        <button className="button ghost" onClick={() => { clearSession(); setAuthenticated(false); }} type="button">Sign out</button>
       </div>
 
       {error && (

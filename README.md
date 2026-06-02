@@ -64,9 +64,29 @@ Set `NEXT_PUBLIC_API_BASE` if the backend is not running at `http://127.0.0.1:80
 ## Important
 
 This is a scaffold/MVP, not a finished production system. Before using with real students, add:
-- real authentication,
-- password hashing,
+- account provisioning and password-reset flows,
 - HTTPS,
 - database migrations,
-- persistent teacher-class assignments instead of demo headers,
+- persistent teacher-class assignment management,
 - deployment security review.
+
+## Authentication
+
+Day 9 uses signed login sessions. The seeded classroom student account is:
+
+```text
+username: demo.student
+password: learn-particles
+```
+
+Set `JWT_SECRET` in hosted environments. Optionally set `ADMIN_INITIAL_PASSWORD`
+on the first deployment to create an `admin` bootstrap account, then rotate it.
+
+## Deployment
+
+`render.yaml` provisions the FastAPI backend and Postgres database on Render.
+Deploy the `frontend/` directory to Vercel and set:
+
+```text
+NEXT_PUBLIC_API_BASE=https://your-api.onrender.com
+```

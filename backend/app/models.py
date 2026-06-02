@@ -10,6 +10,15 @@ class Student(SQLModel, table=True):
     class_id: int
 
 
+class UserAccount(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    username: str = Field(index=True, unique=True)
+    password_hash: str
+    role: str
+    class_id: Optional[int] = None
+    student_id: Optional[int] = Field(default=None, index=True)
+
+
 class Module(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     day_number: int

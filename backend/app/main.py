@@ -1,8 +1,15 @@
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.database import create_db_and_tables
 from app.data.seed import seed_database
-from app.routers import simulations, progress, quizzes, exports
+from app.routers import auth, simulations, progress, quizzes, exports
+
+cors_origins = [
+    origin.strip()
+    for origin in os.getenv("CORS_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000").split(",")
+    if origin.strip()
+]
 
 app = FastAPI(
     title="HEP Summer School Platform API",
@@ -12,11 +19,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-        "http://194.12.142.204:3000",
-    ],
+    allow_origins=cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -29,6 +32,7 @@ def on_startup():
     seed_database()
 
 
+app.include_router(auth.router)
 app.include_router(simulations.router)
 app.include_router(progress.router)
 app.include_router(quizzes.router)
