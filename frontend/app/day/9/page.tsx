@@ -1,0 +1,2 @@
+import DayLayout from "../../../components/DayLayout"; import ReflectionBox from "../../../components/ReflectionBox"; import DetectorSimulator from "../../../components/simulations/DetectorSimulator";
+export default function Page(){return <DayLayout day={9} title="Detector Event Simulator" subtitle="Read detector layers, classify invisible particles, and submit your answer to the private lab backend."><DetectorSimulator/><ReflectionBox prompt="Which detector signals were most useful when you classified events, and why?"/></DayLayout>}

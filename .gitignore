@@ -1,0 +1,12 @@
+.DS_Store
+
+# Backend
+backend/.venv/
+backend/__pycache__/
+backend/app/**/__pycache__/
+backend/hep_summer_school.db
+backend/exports/
+
+# Frontend
+frontend/node_modules/
+frontend/.next/

@@ -1,0 +1,10 @@
+fastapi==0.136.1
+uvicorn[standard]==0.34.0
+sqlmodel==0.0.38
+pydantic==2.13.4
+pandas==2.2.3
+numpy==2.2.1
+python-multipart==0.0.20
+# Optional for ROOT export:
+uproot==5.5.1
+awkward==2.7.1

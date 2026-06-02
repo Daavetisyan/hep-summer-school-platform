@@ -1,0 +1,13 @@
+"use client";
+import { useState } from "react";
+const particles=[
+ ["u","up quark","Quark","+2/3","A light quark found inside protons and neutrons."],["d","down quark","Quark","−1/3","A light quark found inside protons and neutrons."],["c","charm","Quark","+2/3","A heavier cousin of the up quark."],["s","strange","Quark","−1/3","A quark that appears in short-lived hadrons."],["t","top","Quark","+2/3","The heaviest known elementary particle."],["b","bottom","Quark","−1/3","A heavy quark studied in collider experiments."],
+ ["e","electron","Lepton","−1","A stable lepton surrounding atomic nuclei."],["μ","muon","Lepton","−1","A heavier, short-lived relative of the electron."],["τ","tau","Lepton","−1","The heaviest charged lepton."],["ν","neutrino","Lepton","0","A very light neutral particle that rarely interacts."],
+ ["γ","photon","Force carrier","0","Carrier of the electromagnetic force."],["g","gluon","Force carrier","0","Carrier of the strong force between quarks."],["W/Z","W and Z bosons","Force carrier","±1 / 0","Carriers of the weak interaction."],["H","Higgs boson","Higgs","0","Excitation of the Higgs field."]
+];
+export default function Day6StandardModelActivity(){
+ const [active,setActive]=useState(particles[0]);const [hadron,setHadron]=useState<string[]>([]);
+ const charge=hadron.reduce((sum,q)=>sum+(q==="u"?2/3:-1/3),0);
+ return <section className="lesson-grid"><div className="lesson-card wide-card"><p className="eyebrow">Particle atlas</p><h2>Standard Model explorer</h2><div className="standard-grid">{particles.map(p=><button className={`particle-tile ${p[2].replace(" ","-").toLowerCase()}`} key={p[1]} onClick={()=>setActive(p)}><strong>{p[0]}</strong><small>{p[1]}</small></button>)}</div><div className="observation-box"><strong>{active[1]} · {active[2]} · charge {active[3]}</strong><p>{active[4]}</p></div></div>
+ <div className="lesson-card"><p className="eyebrow">Hadron builder</p><h2>Build matter from quarks</h2><p>Choose three quarks. A proton is uud. A neutron is udd.</p><div className="quark-builder">{hadron.map((q,i)=><i key={i}>{q}</i>)}</div><div className="inline-controls"><button className="button ghost" disabled={hadron.length===3} onClick={()=>setHadron([...hadron,"u"])}>Add up +⅔</button><button className="button ghost" disabled={hadron.length===3} onClick={()=>setHadron([...hadron,"d"])}>Add down −⅓</button><button className="button ghost" onClick={()=>setHadron([])}>Reset</button></div><p className="private-result">Total charge: {charge.toFixed(2)} {hadron.join("")==="uud"?"· proton (+1)":hadron.join("")==="udd"?"· neutron (0)":""}</p></div></section>
+}
